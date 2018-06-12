@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 12 06:14:36 2018
-
-@author: ASUS
-"""
-
 import requests
 import re
 from optparse import OptionParser
