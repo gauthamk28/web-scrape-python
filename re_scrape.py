@@ -40,7 +40,7 @@ def main():
     parser.add_option("-i", "--id",
                       action="store", 
                       dest="app_id",
-                      default="com.facebook.katana",
+                      default="com.ubercab",
                       help="The id of the app you want to scrape comments",)
     parser.add_option("-o", "--output",
                       action="store", 
@@ -82,3 +82,39 @@ for i in review_data:
              count += 1
       csvwriter.writerow(i.values())
 res_data.close()
+print("Review File created successfully")
+
+"""
+python play_scrape.py --pages <pages> --id <app_id> --output <outfile.json>
+
+Where:
+
+    --pages are the number of pages to scrape, usually a page contains 40 reviews
+    --id is the app id, ex com.facebook.katana
+    --output is the name of the file where you want to store your results, default name is output.json
+"""
+
+
+#Cleaning the data 
+import pandas as pd
+df=pd.read_csv("reviews.csv")
+df = df.replace(r'\\n',' ', regex=True)
+df = df.replace(r'\\u0026amp;','&', regex=True)
+df = df.replace(r'\\"','"', regex=True)
+df.to_csv("cleaned_reviews.csv")
+
+"""
+
+# ----------------Codes to remove the rows which contains reviews less than 5 words "
+
+import pandas as pd
+
+df=pd.read_csv(r"G:\webscraping\cleaned_reviews.csv",encoding = "cp1252")
+
+df['no_of_words'] =df['review'].str.split().str.len()
+
+#Removing the rows which contains less than 5 words 
+
+df = df.drop(df[df.no_of_words < 5].index)
+
+"""
