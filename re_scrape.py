@@ -4,6 +4,7 @@ from optparse import OptionParser
 import json
 import csv
 
+
 def getGooglePlayReviews(id,page):
     data = {
         "reviewType": 0,
@@ -40,7 +41,7 @@ def main():
     parser.add_option("-i", "--id",
                       action="store", 
                       dest="app_id",
-                      default="com.ubercab",
+                      default="com.tencent.ig",
                       help="The id of the app you want to scrape comments",)
     parser.add_option("-o", "--output",
                       action="store", 
@@ -97,24 +98,22 @@ Where:
 
 #Cleaning the data 
 import pandas as pd
-df=pd.read_csv("reviews.csv")
+df=pd.read_csv("reviews.csv",encoding = "utf-8")
 df = df.replace(r'\\n',' ', regex=True)
 df = df.replace(r'\\u0026amp;','&', regex=True)
 df = df.replace(r'\\"','"', regex=True)
-df.to_csv("cleaned_reviews.csv")
+df.to_csv("new_cleaned_reviews.csv")
 
-"""
+
 
 # ----------------Codes to remove the rows which contains reviews less than 5 words "
 
 import pandas as pd
 
-df=pd.read_csv(r"G:\webscraping\cleaned_reviews.csv",encoding = "cp1252")
+df=pd.read_csv("new_cleaned_reviews.csv",encoding = "cp1252")
 
 df['no_of_words'] =df['review'].str.split().str.len()
 
 #Removing the rows which contains less than 5 words 
 
 df = df.drop(df[df.no_of_words < 5].index)
-
-"""
